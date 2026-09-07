@@ -1,0 +1,18 @@
+{
+  "name": "retro-ruffle-shell",
+  "version": "0.1.0",
+  "description": "Shell Electron arm64 + Ruffle web pour le client Flash de Dofus Retro (experimental)",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "rm -rf ruffle && cp -r node_modules/@ruffle-rs/ruffle ruffle",
+    "dev": "RETROCLIENT_DIR='/Applications/Ankama/Retro/Dofus Retro.app/Contents/Resources/app/retroclient' npm start",
+    "start": "electron ."
+  },
+  "dependencies": {
+    "@ruffle-rs/ruffle": "latest",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0"
+  }
+}
