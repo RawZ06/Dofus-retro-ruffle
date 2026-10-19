@@ -5,8 +5,12 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const net = require('net');
 const { WebSocketServer } = require('ws');
+const { startStaticServer } = require('./static-server');
 
-const RETROCLIENT_DIR = process.env.RETROCLIENT_DIR || path.join(__dirname, 'retroclient');
+// Dossier du client officiel, servi en lecture seule.
+const RETROCLIENT_DIR = process.env.RETROCLIENT_DIR
+  || '/Applications/Ankama/Retro/Dofus Retro.app/Contents/Resources/app/retroclient';
+const HTTP_PORT = 8000; // serveur statique du client (voir static-server.js)
 const WS_PORT = 8765; // pont WebSocket -> TCP utilise par Ruffle (socketProxy)
 
 // ---------------------------------------------------------------------------
@@ -53,6 +57,6 @@ function createWindow() {
 
 app.whenReady().then(() => {
   startSocketBridge();
-  createWindow();
+  startStaticServer(RETROCLIENT_DIR, HTTP_PORT, () => createWindow());
 });
 app.on('window-all-closed', () => app.quit());
